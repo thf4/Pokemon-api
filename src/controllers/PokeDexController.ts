@@ -12,7 +12,7 @@ class PokeDexController {
     
             return res.json(response).status(200);
         } catch(err) {
-            return res.json({ message: 'Error list all pokemons' });
+            return res.json({ message: 'Error list all pokemons' }).status(404);
         };
     };
 

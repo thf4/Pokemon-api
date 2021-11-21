@@ -1,9 +1,8 @@
 import axios from 'axios';
 
 import { PokemonDto } from "../types/dto/PokemonDto";
-import { IPokemonApp } from '../types/IPokemonApp';
 
-class PokemonApp implements IPokemonApp {
+class PokemonApp {
     constructor() { };
 
     public async listAll(): Promise<PokemonDto[]> {
@@ -11,7 +10,6 @@ class PokemonApp implements IPokemonApp {
         const pokemon = await axios.get<PokemonDto[]>(`https://pokeapi.co/api/v2/pokemon/`);
 
         return pokemon.data;
-
     };
 
     public async get(id: number): Promise<PokemonDto> {

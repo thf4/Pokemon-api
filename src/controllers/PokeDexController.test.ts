@@ -19,10 +19,9 @@ describe('PokeDexController test', () => {
         it('should status code 200', async () => {
             jest.spyOn(pokemonApp, 'listAll');
 
-            const response = await request(app)
+            await request(app)
                 .get('/')
                 .expect(200)
-                .then(x => x.body);
         });
     });
 
@@ -30,10 +29,9 @@ describe('PokeDexController test', () => {
         it('should get by id a pokemon info', async () => {
             jest.spyOn(pokemonApp, 'get');
 
-            const response = await request(app)
+            await request(app)
                 .get(`/${fakePokemonId}`)
                 .expect(200)
-                .then(x => x.body);
         });
     });
 });
