@@ -1,39 +1,30 @@
 import axios from 'axios';
 
 import { PokemonDto } from "../types/dto/PokemonDto";
+import { IPokemonApp } from '../types/IPokemonApp';
 
-class PokemonApp {
+class PokemonApp implements IPokemonApp {
     constructor() { };
 
     public async listAll(): Promise<PokemonDto[]> {
-        try {
-            const pokemon = await axios.get(`https://pokeapi.co/api/v2/pokemon/`);
-    
-            return pokemon.data;
-        } catch (err) {
-            return err;
-        }
+
+        const pokemon = await axios.get<PokemonDto[]>(`https://pokeapi.co/api/v2/pokemon/`);
+
+        return pokemon.data;
+
     };
 
     public async get(id: number): Promise<PokemonDto> {
-        try {
-            const pokemon = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
+        const pokemon = await axios.get<PokemonDto>(`https://pokeapi.co/api/v2/pokemon/${id}`);
 
-            if (!pokemon)
-                throw new Error('Pokemon not found');
-            
-            const pokeInfo = {
-                id: pokemon.data.id,
-                name: pokemon.data.name,
-                baseExperience: pokemon.data.baseExperience,
-                abilities: pokemon.data.abilities
-            };
-    
-            return pokeInfo
-        } catch (err) {
-            return err;
-        }
-    
+        const pokeInfo: PokemonDto = {
+            id: pokemon.data.id,
+            name: pokemon.data.name,
+            baseExperience: pokemon.data.baseExperience,
+            abilities: pokemon.data.abilities
+        };
+
+        return pokeInfo
     };
 };
 

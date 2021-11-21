@@ -4,12 +4,12 @@ import routers from './routers/routers';
 class App {
     public express: express.Application
 
-    public constructor () {
+    constructor() {
         this.express = express();
         this.routes();
     }
 
-    private routes (): void {
+    private routes(): void {
         this.express.use(routers);
     }
 }

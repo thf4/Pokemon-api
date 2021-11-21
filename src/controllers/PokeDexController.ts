@@ -2,20 +2,30 @@ import { Request, Response } from "express";
 import PokemonApp from "../app/PokemonApp";
 
 class PokeDexController {
-    constructor(private pokemonApp: PokemonApp) {}
 
-    public async listAll (req: Request, res: Response): Promise<Response> {
-        const pokemon = await this.pokemonApp.listAll();
-        
-        return res.json(pokemon).status(200);
+    constructor() { }
+
+    public async listAll(req: Request, res: Response): Promise<Response> {
+        try {
+            const pokemon = new PokemonApp();
+            const response = await pokemon.listAll();
+    
+            return res.json(response).status(200);
+        } catch(err) {
+            return res.json({ message: 'Error list all pokemons' });
+        };
     };
 
-    public async get (req: Request, res: Response): Promise<Response> {
+    public async get(req: Request, res: Response): Promise<Response> {
         const { id } = req.params;
-
-        const pokemon = await this.pokemonApp.get(parseInt(id));
-
-        return res.json({ pokemon }).status(200);
+        try {
+            const pokemon = new PokemonApp();
+            const response = await pokemon.get(parseInt(id));
+    
+            return res.json(response).status(200);
+        } catch (err) {
+            return res.json({ message: 'Pokemon not found' }).status(404);
+        };
     };
 };
 
